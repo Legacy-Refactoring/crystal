@@ -13,7 +13,15 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
       - ./seeder.sql:/docker-entrypoint-initdb.d/02-seeder.sql:ro
 
-  lang:
+  crystal:
+    image: crystallang/crystal:1.15
+    container_name: legacy_crystal
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: crystal run legacy.cr
+    depends_on:
+      - db
 
 volumes:
   postgres_data:
